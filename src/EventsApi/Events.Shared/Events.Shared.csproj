@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Exceptions\" />
-    <Folder Include="Infrastructure\Notifications\" />
     <Folder Include="Infrastructure\Util\" />
     <Folder Include="Services\" />
   </ItemGroup>
