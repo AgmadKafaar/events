@@ -6,8 +6,8 @@ namespace Events.Shared.Infrastructure.Data
 {
     public class EventsContext : DbContext
     {
-
         public string DbPath { get; }
+
         public EventsContext()
         {
             var folder = Environment.SpecialFolder.LocalApplicationData;
@@ -17,6 +17,9 @@ namespace Events.Shared.Infrastructure.Data
 
         public EventsContext(DbContextOptions<EventsContext> options) : base(options)
         {
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            DbPath = System.IO.Path.Join(path, "events.db");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
@@ -27,6 +30,11 @@ namespace Events.Shared.Infrastructure.Data
             modelBuilder.Entity<Event>()
                 .Property(p => p.RowVersion)
                 .IsRowVersion();
+
+            modelBuilder.Entity<AttendeeType>().HasData(
+                new AttendeeType() { Id = 1, Description = "Patient" },
+                new AttendeeType() { Id = 2, Description = "Doctor" }
+                );
         }
 
         public virtual DbSet<Attendee> Attendees { set; get; }

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace Events.Tests
 {
     public class CompositRoot
     {
-
         private readonly ServiceProvider _serviceProvider;
 
         public CompositRoot()
