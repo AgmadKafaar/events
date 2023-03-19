@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Events.Shared.Services;
 
 namespace EventsApi.Controllers
 {
@@ -15,13 +16,13 @@ namespace EventsApi.Controllers
     [ApiController]
     public class EventsController : ControllerBase
     {
-        private readonly EventsContext _context;
+        private readonly IEventService _eventService;
         private readonly IMapper _mapper;
 
-        public EventsController(EventsContext context, IMapper mapper)
+        public EventsController( IMapper mapper, IEventService eventService)
         {
-            _context = context;
             _mapper = mapper;
+            _eventService = eventService;
         }
 
         // DELETE: api/Events/5
@@ -32,15 +33,11 @@ namespace EventsApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteEvent(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var @event = await _eventService.DeleteEvent(id);
             if (@event == null)
             {
                 return NotFound();
             }
-
-            _context.Events.Remove(@event);
-            await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
@@ -52,7 +49,7 @@ namespace EventsApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<EventDto>> GetEvent(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var @event = await _eventService.GetEvent(id);
 
             if (@event == null)
             {
@@ -67,7 +64,7 @@ namespace EventsApi.Controllers
         [ProducesResponseType(typeof(IEnumerable<Event>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
         {
-            var result = await _context.Events.ToListAsync();
+            var result = await _eventService.GetEvents();
             return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventDto>>(result));
         }
         // POST: api/Events
@@ -79,9 +76,7 @@ namespace EventsApi.Controllers
         public async Task<ActionResult<EventDto>> PostEvent(EventDto @event)
         {
             var mappedEvent = _mapper.Map<EventDto, Event>(@event);
-            _context.Events.Add(mappedEvent);
-            await _context.SaveChangesAsync();
-
+            mappedEvent = await _eventService.CreateEvent(mappedEvent);
             return CreatedAtAction("GetEvent", new { id = mappedEvent.Id }, mappedEvent);
         }
 
@@ -99,29 +94,8 @@ namespace EventsApi.Controllers
                 return BadRequest();
             }
             var mappedObj = _mapper.Map<EventDto, Event>(@event);
-            _context.Entry(mappedObj).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-        private bool EventExists(int id)
-        {
-            return _context.Events.Any(e => e.Id == id);
+            mappedObj = await _eventService.UpdateEvent(id, mappedObj);
+            return mappedObj == null ? NotFound() : NoContent();
         }
     }
 }
