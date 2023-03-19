@@ -48,6 +48,9 @@ namespace Events.ApiClient.Client
         /// <value>The prefix of the API key.</value>
         public static Dictionary<String, String> ApiKeyPrefix = new Dictionary<String, String>();
   
+        /// <summary>
+        /// The get temp path
+        /// </summary>
         private static string _tempFolderPath = Path.GetTempPath();
   
         /// <summary>
@@ -78,8 +81,14 @@ namespace Events.ApiClient.Client
             }
         }
 
+        /// <summary>
+        /// The iso8601 datetime format
+        /// </summary>
         private const string ISO8601_DATETIME_FORMAT = "o";
 
+        /// <summary>
+        /// The iso8601 datetime format
+        /// </summary>
         private static string _dateTimeFormat = ISO8601_DATETIME_FORMAT;
 
         /// <summary>

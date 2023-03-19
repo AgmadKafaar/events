@@ -1,10 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
 namespace Events.Shared.Migrations
 {
+    /// <summary>
+    /// The initial create class
+    /// </summary>
+    /// <seealso cref="Migration"/>
     public partial class InitialCreate : Migration
     {
+        /// <summary>
+        /// Ups the migration builder
+        /// </summary>
+        /// <param name="migrationBuilder">The migration builder</param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -93,6 +101,10 @@ namespace Events.Shared.Migrations
                 column: "AttendeeTypeId");
         }
 
+        /// <summary>
+        /// Downs the migration builder
+        /// </summary>
+        /// <param name="migrationBuilder">The migration builder</param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

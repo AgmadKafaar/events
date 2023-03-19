@@ -13,6 +13,9 @@ namespace Events.ApiClient.Client
     /// </summary>
     public class ApiClient
     {
+        /// <summary>
+        /// The string
+        /// </summary>
         private readonly Dictionary<String, String> _defaultHeaderMap = new Dictionary<String, String>();
   
         /// <summary>

@@ -1,0 +1,8 @@
+---
+dsn: sqlite:///C:/Users/agmad/AppData/Local/events.db
+docPath: Events
+format:
+  adjust: false
+er:
+  skip: false
+  format: png
