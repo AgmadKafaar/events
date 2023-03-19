@@ -10,6 +10,7 @@ namespace Events.Shared.Models
         public ICollection<Attendee> Attendees { get; set; }
 
         [Required]
+        [MaxLength(7, ErrorMessage = "Description is too long")]
         public string Description { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

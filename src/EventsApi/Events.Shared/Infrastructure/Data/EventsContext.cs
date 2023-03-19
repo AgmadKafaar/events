@@ -17,6 +17,9 @@ namespace Events.Shared.Infrastructure.Data
 
         public EventsContext(DbContextOptions<EventsContext> options) : base(options)
         {
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            DbPath = System.IO.Path.Join(path, "events.db");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
@@ -29,7 +32,7 @@ namespace Events.Shared.Infrastructure.Data
                 .IsRowVersion();
 
             modelBuilder.Entity<AttendeeType>().HasData(
-                new AttendeeType() { Id = 1, Description = "Customer" }, 
+                new AttendeeType() { Id = 1, Description = "Patient" }, 
                 new AttendeeType() { Id = 2, Description = "Doctor" }
                 );
 

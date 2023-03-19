@@ -13,92 +13,96 @@ namespace EventsApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventsController : ControllerBase
+    public class AttendeesController : ControllerBase
     {
         private readonly EventsContext _context;
         private readonly IMapper _mapper;
 
-        public EventsController(EventsContext context, IMapper mapper)
+        public AttendeesController(EventsContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        // DELETE: api/Events/5
+        // DELETE: api/Attendees/5
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteEvent(int id)
+        public async Task<IActionResult> DeleteAttendee(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
-            if (@event == null)
+            var attendee = await _context.Attendees.FindAsync(id);
+            if (attendee == null)
             {
                 return NotFound();
             }
 
-            _context.Events.Remove(@event);
+            _context.Attendees.Remove(attendee);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        // GET: api/Events/5
+        // GET: api/Attendees/5
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(EventDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(AttendeeDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<EventDto>> GetEvent(int id)
+        public async Task<ActionResult<AttendeeDto>> GetAttendee(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var attendee = await _context.Attendees.FindAsync(id);
 
-            if (@event == null)
+            if (attendee == null)
             {
                 return NotFound();
             }
-            var result = _mapper.Map<Event, EventDto>(@event);
+
+            var result = _mapper.Map<Attendee, AttendeeDto>(attendee);
             return result;
         }
 
-        // GET: api/Events
+        // GET: api/Attendees
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Event>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
+        [ProducesResponseType(typeof(IEnumerable<AttendeeDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<AttendeeDto>>> GetAttendees()
         {
-            var result = await _context.Events.ToListAsync();
-            return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventDto>>(result));
+            var result = await _context.Attendees.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<Attendee>, IEnumerable<AttendeeDto>>(result));
         }
-        // POST: api/Events
+
+        // POST: api/Attendees
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [ProducesResponseType(typeof(EventDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(Attendee), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<EventDto>> PostEvent(EventDto @event)
+        public async Task<ActionResult<AttendeeDto>> PostAttendee(AttendeeDto attendee)
         {
-            var mappedEvent = _mapper.Map<EventDto, Event>(@event);
-            _context.Events.Add(mappedEvent);
+            var mappedAttendee = _mapper.Map<AttendeeDto, Attendee>(attendee);
+            _context.Attendees.Add(mappedAttendee);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEvent", new { id = mappedEvent.Id }, mappedEvent);
+            return CreatedAtAction("GetAttendee", new { id = mappedAttendee.Id }, mappedAttendee);
         }
 
-        // PUT: api/Events/5
+        // PUT: api/Attendees/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> PutEvent(int id, EventDto @event)
+        public async Task<IActionResult> PutAttendee(int id, AttendeeDto attendee)
         {
-            if (id != @event.Id)
+            if (id != attendee.Id)
             {
                 return BadRequest();
             }
-            var mappedObj = _mapper.Map<EventDto, Event>(@event);
+
+            var mappedObj = _mapper.Map<AttendeeDto, Attendee>(attendee);
+
             _context.Entry(mappedObj).State = EntityState.Modified;
 
             try
@@ -107,7 +111,7 @@ namespace EventsApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EventExists(id))
+                if (!AttendeeExists(id))
                 {
                     return NotFound();
                 }
@@ -119,9 +123,10 @@ namespace EventsApi.Controllers
 
             return NoContent();
         }
-        private bool EventExists(int id)
+
+        private bool AttendeeExists(int id)
         {
-            return _context.Events.Any(e => e.Id == id);
+            return _context.Attendees.Any(e => e.Id == id);
         }
     }
 }

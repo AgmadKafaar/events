@@ -3,14 +3,16 @@ using System;
 using Events.Shared.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Events.Shared.Migrations
 {
     [DbContext(typeof(EventsContext))]
-    partial class EventsContextModelSnapshot : ModelSnapshot
+    [Migration("20230319101101_DataUpdates")]
+    partial class DataUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,7 +69,6 @@ namespace Events.Shared.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(7)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -78,7 +79,7 @@ namespace Events.Shared.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Patient"
+                            Description = "Customer"
                         },
                         new
                         {
