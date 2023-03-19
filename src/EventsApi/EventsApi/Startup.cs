@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection;
+using Events.Shared.Services;
 
 namespace EventsApi
 {
@@ -51,7 +52,7 @@ namespace EventsApi
         {
             services.AddAutoMapper(Assembly.GetAssembly(typeof(EventsMappingProfile)));
             services.AddProblemDetails();
-
+            
             // in real world, would not use sqlite - but rather a DBMS like pgsql, mysql, mssql or mariadb.
             // and would get connection string from a .env file or secrets store.
             var folder = Environment.SpecialFolder.LocalApplicationData;
@@ -60,6 +61,8 @@ namespace EventsApi
             services.AddDbContext<EventsContext>(
                 options => options.UseSqlite(dbPath)
                 );
+
+            services.AddScoped<IEventService, EventService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
