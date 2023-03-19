@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Events.Shared.Models;
 using Events.Shared.Services;
 using EventsApi.ViewModel;
@@ -9,13 +9,28 @@ using System.Threading.Tasks;
 
 namespace EventsApi.Controllers
 {
+    /// <summary>
+    /// The events controller class
+    /// </summary>
+    /// <seealso cref="ControllerBase"/>
     [Route("api/[controller]")]
     [ApiController]
     public class EventsController : ControllerBase
     {
+        /// <summary>
+        /// The event service
+        /// </summary>
         private readonly IEventService _eventService;
+        /// <summary>
+        /// The mapper
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventsController"/> class
+        /// </summary>
+        /// <param name="mapper">The mapper</param>
+        /// <param name="eventService">The event service</param>
         public EventsController(IMapper mapper, IEventService eventService)
         {
             _mapper = mapper;
@@ -23,6 +38,11 @@ namespace EventsApi.Controllers
         }
 
         // DELETE: api/Events/5
+        /// <summary>
+        /// Deletes the event using the specified id
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>A task containing the action result</returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -39,6 +59,11 @@ namespace EventsApi.Controllers
         }
 
         // GET: api/Events/5
+        /// <summary>
+        /// Gets the event using the specified id
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>The result</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(EventDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -57,6 +82,10 @@ namespace EventsApi.Controllers
         }
 
         // GET: api/Events
+        /// <summary>
+        /// Gets the events
+        /// </summary>
+        /// <returns>A task containing an action result of i enumerable event</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Event>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
@@ -67,6 +96,11 @@ namespace EventsApi.Controllers
 
         // POST: api/Events
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Posts the event using the specified event
+        /// </summary>
+        /// <param name="@event">The event</param>
+        /// <returns>A task containing an action result of event dto</returns>
         [HttpPost]
         [ProducesResponseType(typeof(EventDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -80,6 +114,12 @@ namespace EventsApi.Controllers
 
         // PUT: api/Events/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Puts the event using the specified id
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="@event">The event</param>
+        /// <returns>A task containing the action result</returns>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]

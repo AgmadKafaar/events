@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventsApi", "EventsApi\Even
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Events.Shared", "Events.Shared\Events.Shared.csproj", "{83571045-801B-4D60-9F29-A463039D6863}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events.ApiClient", "Events.ApiClient\Events.ApiClient.csproj", "{CCCDD828-9EBE-4E26-97A3-58818DC57386}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{83571045-801B-4D60-9F29-A463039D6863}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83571045-801B-4D60-9F29-A463039D6863}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83571045-801B-4D60-9F29-A463039D6863}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCCDD828-9EBE-4E26-97A3-58818DC57386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCCDD828-9EBE-4E26-97A3-58818DC57386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCCDD828-9EBE-4E26-97A3-58818DC57386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCCDD828-9EBE-4E26-97A3-58818DC57386}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

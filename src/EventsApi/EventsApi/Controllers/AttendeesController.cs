@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Events.Shared.Infrastructure.Data;
 using Events.Shared.Models;
 using EventsApi.ViewModel;
@@ -11,13 +11,28 @@ using System.Threading.Tasks;
 
 namespace EventsApi.Controllers
 {
+    /// <summary>
+    /// The attendees controller class
+    /// </summary>
+    /// <seealso cref="ControllerBase"/>
     [Route("api/[controller]")]
     [ApiController]
     public class AttendeesController : ControllerBase
     {
+        /// <summary>
+        /// The context
+        /// </summary>
         private readonly EventsContext _context;
+        /// <summary>
+        /// The mapper
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeesController"/> class
+        /// </summary>
+        /// <param name="context">The context</param>
+        /// <param name="mapper">The mapper</param>
         public AttendeesController(EventsContext context, IMapper mapper)
         {
             _context = context;
@@ -25,6 +40,11 @@ namespace EventsApi.Controllers
         }
 
         // DELETE: api/Attendees/5
+        /// <summary>
+        /// Deletes the attendee using the specified id
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>A task containing the action result</returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -45,6 +65,11 @@ namespace EventsApi.Controllers
         }
 
         // GET: api/Attendees/5
+        /// <summary>
+        /// Gets the attendee using the specified id
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>The result</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(AttendeeDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -64,6 +89,10 @@ namespace EventsApi.Controllers
         }
 
         // GET: api/Attendees
+        /// <summary>
+        /// Gets the attendees
+        /// </summary>
+        /// <returns>A task containing an action result of i enumerable attendee dto</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<AttendeeDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<AttendeeDto>>> GetAttendees()
@@ -74,6 +103,11 @@ namespace EventsApi.Controllers
 
         // POST: api/Attendees
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Posts the attendee using the specified attendee
+        /// </summary>
+        /// <param name="attendee">The attendee</param>
+        /// <returns>A task containing an action result of attendee dto</returns>
         [HttpPost]
         [ProducesResponseType(typeof(Attendee), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -89,6 +123,12 @@ namespace EventsApi.Controllers
 
         // PUT: api/Attendees/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Puts the attendee using the specified id
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="attendee">The attendee</param>
+        /// <returns>A task containing the action result</returns>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -124,6 +164,11 @@ namespace EventsApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Describes whether this instance attendee exists
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>The bool</returns>
         private bool AttendeeExists(int id)
         {
             return _context.Attendees.Any(e => e.Id == id);
