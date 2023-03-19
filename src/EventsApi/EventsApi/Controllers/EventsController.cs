@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
-using Events.Shared.Infrastructure.Data;
 using Events.Shared.Models;
+using Events.Shared.Services;
 using EventsApi.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Events.Shared.Services;
 
 namespace EventsApi.Controllers
 {
@@ -19,7 +16,7 @@ namespace EventsApi.Controllers
         private readonly IEventService _eventService;
         private readonly IMapper _mapper;
 
-        public EventsController( IMapper mapper, IEventService eventService)
+        public EventsController(IMapper mapper, IEventService eventService)
         {
             _mapper = mapper;
             _eventService = eventService;
@@ -67,6 +64,7 @@ namespace EventsApi.Controllers
             var result = await _eventService.GetEvents();
             return Ok(_mapper.Map<IEnumerable<Event>, IEnumerable<EventDto>>(result));
         }
+
         // POST: api/Events
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]

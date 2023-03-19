@@ -6,8 +6,8 @@ namespace Events.Shared.Infrastructure.Data
 {
     public class EventsContext : DbContext
     {
-
         public string DbPath { get; }
+
         public EventsContext()
         {
             var folder = Environment.SpecialFolder.LocalApplicationData;
@@ -32,16 +32,13 @@ namespace Events.Shared.Infrastructure.Data
                 .IsRowVersion();
 
             modelBuilder.Entity<AttendeeType>().HasData(
-                new AttendeeType() { Id = 1, Description = "Patient" }, 
+                new AttendeeType() { Id = 1, Description = "Patient" },
                 new AttendeeType() { Id = 2, Description = "Doctor" }
                 );
-
-
         }
 
         public virtual DbSet<Attendee> Attendees { set; get; }
         public virtual DbSet<AttendeeType> AttendeesType { set; get; }
         public virtual DbSet<Event> Events { set; get; }
-
     }
 }
