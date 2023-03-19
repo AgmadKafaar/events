@@ -1,20 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Events.Shared.Models
 {
     public class Event
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public DateTime StartTime { get; set; }
+        //relationships
+        public ICollection<Attendee> Attendees { get; set; }
 
+        [Required]
+        public string Description { get; set; }
+
+        [Required]
         public DateTime EndTime { get; set; }
 
-        public ICollection<Attendee> Attendees { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
+        public DateTime StartTime { get; set; }
+
+        [Required]
+        [MaxLength(100, ErrorMessage = "The title is too long.")]
+        public string Title { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }
