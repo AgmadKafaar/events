@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Events.Shared.Models
 {
     public class AttendeeType
     {
-        public int Id { get; set; }
+        //relationships
+        public ICollection<Attendee> Attendees { get; set; }
+
+        [Required]
         public string Description { get; set; }
 
-        public ICollection<Attendee> Attendees{ get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
     }
 }
